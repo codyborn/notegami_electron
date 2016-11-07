@@ -1,0 +1,38 @@
+# Run electron app
+npm start
+
+# Package electron application
+https://github.com/electron-userland/electron-packager
+npm install electron-packager --save-dev
+
+#shortcut: npm run pack:win
+electron-packager . \"Notegami\" --out=dist/win --platform=win32 --arch=x64 --overwrite --appname \"Notegami\" --icon=assets/app_icon.ico --ignore=dist --ignore=assets --ignore=builder.json
+
+# Change electron application icon
+https://github.com/electron/rcedit
+npm install rcedit -g
+.\rcedit.exe "..\..\..\Notegami-win32-ia32\Notegami.exe" --set-icon "C:\Users\Cody\Documents\GitHub\app_icon.ico"
+
+# Create installer from electron app
+https://github.com/electron/windows-installer
+# Install module
+npm install --save-dev electron-winstaller
+# type "node" in git window to open up node.js cmd prompt and run the following to create installer
+
+var electronInstaller = require('electron-winstaller');
+resultPromise = electronInstaller.createWindowsInstaller({
+    appDirectory: 'dist/win/Notegami-win32-x64',
+    outputDirectory: 'dist/win/',
+    authors: 'Cody Born',
+    exe: 'Notegami.exe',
+	loadingGif: 'assets/loading.gif',
+	title: "Notegami",
+	iconUrl: "http://notegami.com/Views/Images/app_icon.png",
+	setupIcon: "assets/app_icon.ico"
+  });
+
+resultPromise.then(() => console.log("It worked!"), (e) => console.log(`No dice: ${e.message}`));
+
+# http://electron.rocks/electron-builder-explained/
+# Create installer from electron app
+npm run dist  
