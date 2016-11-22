@@ -1,5 +1,6 @@
 // The electron-squirrel-startup module will handle the most common events for you, such as managing desktop shortcuts
 if (require('electron-squirrel-startup')) return;
+const {autoUpdater} = require('electron');
 
 const electron = require('electron')
 // Module to control application life.
@@ -16,33 +17,11 @@ if (handleSquirrelEvent()) {
   // squirrel event handled and app will exit in 1000ms, so don't do anything else
   return;
 }
-
+var checkForUpdates = true;
 function handleSquirrelEvent() {
   if (process.argv.length === 1) {
     return false;
   }
-
-  const ChildProcess = require('child_process');
-  const path = require('path');
-
-  const appFolder = path.resolve(process.execPath, '..');
-  const rootAtomFolder = path.resolve(appFolder, '..');
-  const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
-  const exeName = path.basename(process.execPath);
-
-  const spawn = function(command, args) {
-    let spawnedProcess, error;
-
-    try {
-      spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
-    } catch (error) {}
-
-    return spawnedProcess;
-  };
-
-  const spawnUpdate = function(args) {
-    return spawn(updateDotExe, args);
-  };
 
   const squirrelEvent = process.argv[1];
   switch (squirrelEvent) {
@@ -78,6 +57,10 @@ function handleSquirrelEvent() {
       return true;
   }
 };
+
+const feedURL = 'http://notegami.com/install/win?';  
+autoUpdater.setFeedURL(feedURL); 
+autoUpdater.checkForUpdates();
 
 function createWindow () {
   // Create the browser window.
