@@ -59,7 +59,7 @@ function handleSquirrelEvent() {
 };
 
 const feedURL = 'http://notegami.com/install/win?';  
-autoUpdater.setFeedURL(feedURL); 
+autoUpdater.setFeedURL(feedURL);
 autoUpdater.checkForUpdates();
 
 function createWindow () {
